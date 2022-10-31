@@ -5,12 +5,12 @@ import { MintController } from './mint/MintController.js';
 import { PairController } from './pair/PairController.js';
 import { SwapController } from './swap/SwapController.js';
 
-export class BusController implements Controller {
-  private pairController = new PairController();
-  private swapController = new SwapController();
-  private mintController = new MintController();
-  private burnController = new BurnController();
+const pairController = new PairController();
+const swapController = new SwapController();
+const mintController = new MintController();
+const burnController = new BurnController();
 
+export class BusController implements Controller {
   run(payload: ControllerPayload) {
     if (payload.type === 'unknown') {
       logger.error(
@@ -19,15 +19,21 @@ export class BusController implements Controller {
       return;
     }
 
-    const controllerMap: Record<string, Function> = {
-      pairs: this.pairController.run,
-      swaps: this.swapController.run,
-      mints: this.mintController.run,
-      burns: this.burnController.run,
+    const controllerMap: Record<string, Controller> = {
+      pairs: pairController,
+      swaps: swapController,
+      mints: mintController,
+      burns: burnController,
     };
 
     if (controllerMap[payload.channel]) {
-      controllerMap[payload.channel](payload);
+      try {
+        console.log(payload.channel);
+        console.log(controllerMap[payload.channel]);
+        controllerMap[payload.channel].run(payload);
+      } catch (error) {
+        logger.error(`Exception in bus >>>> ${error}`);
+      }
     }
   }
 }

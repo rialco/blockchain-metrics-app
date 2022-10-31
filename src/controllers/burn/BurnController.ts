@@ -5,8 +5,8 @@ export class BurnController implements Controller {
   private storeMintController = new StoreBurnController();
 
   run(payload: ControllerPayload) {
-    const instructionMap: Record<string, Function> = {
-      store: this.storeMintController.run,
+    const instructionMap: Record<string, Controller> = {
+      store: this.storeMintController,
     };
 
     const burn = {
@@ -18,6 +18,6 @@ export class BurnController implements Controller {
 
     payload.data = burn;
 
-    instructionMap[payload.type](payload);
+    instructionMap[payload.type].run(payload);
   }
 }

@@ -1,7 +1,9 @@
+import { KxWalletRepository } from '../../wallet/infrastructure/KxWalletRepository.js';
 import { KxMintRepository } from '../infrastructure/KxMintRepository.js';
 
 export class MintInteractor {
-  static saveNewMint(payload: Record<string, any>) {
-    KxMintRepository.persistMint(payload.data);
+  static async saveNewMint(data: Record<string, any>) {
+    await KxWalletRepository.persistWallet({ address: data.senderAddress });
+    await KxMintRepository.persistMint(data);
   }
 }

@@ -9,7 +9,7 @@
   "scripts": {
     "build": "npm run build:clean && npm run build:tsc",
     "build:tsc": "tsc -p tsconfig.json",
-    "build:clean": "rm -r dist; exit 0",
+    "build:clean": "rm -rf dist; exit 0",
     "build:container": "npm run migrate:build up && node ./dist/start.js",
     "build:dev": "npm run build:tsc && node ./dist/start.js",
     "dev": "nodemon --watch src --exec npm run build:dev"
@@ -22,6 +22,7 @@
   "devDependencies": {
     "@tsconfig/node16": "^1.0.3",
     "@types/node": "^18.7.23",
+    "@types/node-cron": "^3.0.5",
     "@typescript-eslint/eslint-plugin": "^5.39.0",
     "@typescript-eslint/parser": "^5.39.0",
     "eslint": "^8.24.0",
@@ -32,6 +33,7 @@
     "ioredis": "^5.2.3",
     "jest": "^29.1.1",
     "knex": "^2.3.0",
+    "node-cron": "^3.0.2",
     "pg": "^8.8.0",
     "pino": "^8.6.1",
     "uuid": "^9.0.0"

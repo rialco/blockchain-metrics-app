@@ -1,6 +1,6 @@
 import { Server } from './server.js';
 
-const CHANNELS = ['pairs', 'swaps'];
+const CHANNELS = ['pairs', 'swaps', 'mints', 'burns'];
 
 export class App {
   private server?: Server;

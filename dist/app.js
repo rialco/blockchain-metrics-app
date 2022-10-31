@@ -2,20 +2,15 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.App = void 0;
 const server_js_1 = require("./server.js");
+const CHANNELS = ['pairs', 'swaps', 'mints', 'burns'];
 class App {
     async start() {
-        const port = process.env.PORT || '3000';
-        this.server = new server_js_1.Server(port);
-        return this.server.listen();
+        this.server = new server_js_1.Server(CHANNELS);
+        this.server.start();
     }
     async stop() {
         if (this.server) {
             return this.server.stop();
-        }
-    }
-    get httpServer() {
-        if (this.server) {
-            return this.server.getHttpServer();
         }
     }
 }

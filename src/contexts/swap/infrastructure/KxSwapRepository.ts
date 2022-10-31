@@ -2,10 +2,10 @@ import { logger } from '../../../logger/index.js';
 import knex from '../../shared/infrastructure/postgres/KxConfig.js';
 
 export class KxSwapRepository {
-  static persistSwap(data: Record<string, any>) {
+  static async persistSwap(data: Record<string, any>) {
     try {
-      knex('swaps').insert({
-        sender_address: data.senderAddress,
+      await knex('swaps').insert({
+        from_address: data.senderAddress,
         amount_0_in: data.amount0In,
         amount_1_in: data.amount1In,
         amount_0_out: data.amount0Out,
@@ -14,8 +14,7 @@ export class KxSwapRepository {
       });
     } catch (error) {
       logger.error(
-        'There was an error while trying to persist the new Swap.',
-        error
+        `There was an error while trying to persist the new Swap. >>>> ${error}`
       );
     }
   }

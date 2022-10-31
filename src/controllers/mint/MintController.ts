@@ -5,8 +5,8 @@ export class MintController implements Controller {
   private storeMintController = new StoreMintController();
 
   run(payload: ControllerPayload) {
-    const instructionMap: Record<string, Function> = {
-      store: this.storeMintController.run,
+    const instructionMap: Record<string, Controller> = {
+      store: this.storeMintController,
     };
 
     const mint = {
@@ -17,6 +17,6 @@ export class MintController implements Controller {
 
     payload.data = mint;
 
-    instructionMap[payload.type](payload);
+    instructionMap[payload.type].run(payload);
   }
 }
